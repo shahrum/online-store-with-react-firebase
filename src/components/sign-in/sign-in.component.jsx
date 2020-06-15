@@ -6,7 +6,7 @@ import FormInput from "../form-input/form-input.component";
 
 import CustomButton from "../custom-button/custom-button.component";
 
-import { signInWithGoogle } from "../../firebase/firebase.utils";
+import { signInWithGoogle, auth } from "../../firebase/firebase.utils";
 
 class SignIn extends React.Component {
 	constructor(props) {
@@ -17,18 +17,16 @@ class SignIn extends React.Component {
 		};
 	}
 
-	handleSubmit = (event) => {
+	handleSubmit = async (event) => {
 		event.preventDefault();
-		console.log("0", this.state);
-		this.setState(
-			{
-				email: "",
-				password: "",
-			},
-			() => {
-				console.log("1", this.state);
-			}
-		);
+		const { email, password } = this.state;
+
+		try {
+			await auth.signInWithEmailAndPassword(email, password);
+			this.setState({ email: "", password: "" });
+		} catch (error) {
+			console.log("sigin error", error);
+		}
 	};
 
 	handleChange = (event) => {
