@@ -12,9 +12,8 @@ const ShopPage = ({ match, location, history }) => {
 	console.log("my props", match);
 	return (
 		<div className="shop-page">
-			<Route exact component={CollectionOverview} />
+			<Route exact path={`${match.path}`} component={CollectionOverview} />
 			<Route path={`${match.path}/:collectionId`} component={CollectionPage} />
-			{/* <CollectionOverview /> */}
 		</div>
 	);
 };
